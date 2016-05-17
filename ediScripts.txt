@@ -1,0 +1,25 @@
+See EASISTANDARDS.COM for information about the easi standard of EDI.
+Generate 856
+$reports = $services.order.CreateEasi856Report($screen.AuthenticationKey, 46087, "160492216", "125500697", (new-object DateTime(2014,10,10)), 4, $false, $null)
+foreach ( $r in $reports ) {
+[System.IO.File]::WriteAllText(('c:\temp\856\'+$r.Interchange+'.txt'), $r.ToString())
+}
+
+Generate 945
+$reports = $services.order.CreateEasi945Report($screen.AuthenticationKey, 46087, "160492216", "125500697", (new-object DateTime(2013,10,15)), $false)
+foreach ( $r in $reports ) {
+[System.IO.File]::WriteAllText(('c:\temp\'+$r.Interchange+'.txt'), $r.ToString())}
+
+Create 810
+$reports = $services.order.CreateEasi810Reports($screen.AuthenticationKey, 46082, (new-object DateTime(2016, 5, 12)) ) 
+foreach ( $r in $reports ) {
+[System.IO.File]::WriteAllText(('C:\Users\btruthan\Desktop\810\810_160492216_'+$r.Interchange+'.txt'), $r.ToString())
+} 
+
+Generate 846
+$file = $services.inventory.ExportEasi846($screen.AuthenticationKey, 1212, "", [TimeSpan]::Zero, "senderId", "receiverId", "vendorId", $false)
+[System.IO.File]::WriteAllText('C:\temp\846.txt', $file.ToString())
+
+Import 846
+[string[]]$content = [System.IO.File]::ReadAllText("C:\Users\btruthan\Desktop\846_084815018_20150409071937.TXT")
+$screens.inventory.ImportEasi846InventoryStatus($screen.AuthenticationKey, $content, $null)
