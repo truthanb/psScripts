@@ -1,0 +1,9 @@
+Fix job product rebates on a team store.
+
+$data = Get-Field $screen m_info
+ $tpps = $data.TeamPlayerPurchaseTable 
+foreach ($tpp in $tpps) 
+{ $tpp.Rebate = $tpp.Purchase.JobProduct.RebateAmount } 
+
+Send Showroom Notices
+$services.maintenance.SendShowroomNotices($screen.AuthenticationKey)
