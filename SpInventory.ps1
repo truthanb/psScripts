@@ -85,7 +85,7 @@ foreach ($p in $pData) {
     }#end foreach $pRows
 }
 
-$invCSV | Export-Csv "\\ares.priv\filesystem\Global\Archive\Ares\Inventory\HerculesEdi\Speedo\inv.csv" -Force -NoTypeInformation
+$invCSV | Export-Csv <#Enter Valid Filepath #> -Force -NoTypeInformation
 $logout = $navFrame.document.GetElementsByTagName("a") | where {$_.className -eq "ctl00_PRCommonMenuLogon_MenuPRCommonMenu_1 PRCommonMenu_Menu ctl00_PRCommonMenuLogon_MenuPRCommonMenu_3"}
 $logout.click()
 $ie.Quit()
