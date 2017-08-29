@@ -1,0 +1,36 @@
+Start-Transcript -Path "C:\AutomationBox\abc.txt" 
+
+$nunit = "C:\Program Files (x86)\NUnit.org\nunit-console\nunit3-console.exe"
+$ProjectDir = "C:\Projects\main\abc"
+$ConfigDir = "$ProjectDir\resources\configuration.json"
+$tests = "$ProjectDir\abc.csproj"
+
+#test firefox
+Write-Host "Starting Firefox abc Tests..." 
+$config = Get-Content $ConfigDir -raw | ConvertFrom-Json
+$config.browser = "Firefox"
+$config | ConvertTo-Json | Set-Content $ConfigDir -Force
+$p1 = Start-Process $nunit $tests -PassThru
+$p1 | Wait-Process
+Write-Host "Firefox abc Tests are complete..."
+
+#test chrome
+Write-Host "Starting Chrome abc Tests..."
+$config = Get-Content $ConfigDir -raw | ConvertFrom-Json
+$config.browser = "Chrome"
+$config | ConvertTo-Json | Set-Content $ConfigDir -Force
+$p1 = Start-Process $nunit $tests -PassThru
+$p1 | Wait-Process
+Write-Host "Chrome abc Tests are complete..."
+
+
+#test ie
+Write-Host "Starting IE abc Tests..."
+$config = Get-Content $ConfigDir -raw | ConvertFrom-Json
+$config.browser = "IE"
+$config | ConvertTo-Json | Set-Content $ConfigDir -Force
+$p1 = Start-Process $nunit $tests -PassThru
+$p1 | Wait-Process
+Write-Host "IE abc Tests are complete..."
+
+Stop-Transcript
